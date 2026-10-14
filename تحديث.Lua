@@ -1,0 +1,195 @@
+-- ====================================================
+--       EMAM123090 - STEAL AN EGG FAKE ADMIN SYSTEM
+-- ====================================================
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local HRP = Character:WaitForChild("HumanoidRootPart")
+
+-- 1. إضافة تاج الملك الرينبو فوق رأسك
+local function CreateEmamTitle(char)
+    local head = char:WaitForChild("Head", 5)
+    if not head or head:FindFirstChild("EmamAdminTag") then return end
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "EmamAdminTag"
+    billboard.Size = UDim2.new(0, 260, 0, 50)
+    billboard.StudsOffset = Vector3.new(0, 3.5, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Parent = head
+
+    local tagLabel = Instance.new("TextLabel")
+    tagLabel.Size = UDim2.new(1, 0, 1, 0)
+    tagLabel.BackgroundTransparency = 1
+    tagLabel.Text = "👑 [SYSTEM ADMIN] EMAM123090 👑"
+    tagLabel.Font = Enum.Font.FredokaOne
+    tagLabel.TextSize = 18
+    tagLabel.TextStrokeTransparency = 0.2
+    tagLabel.Parent = billboard
+
+    task.spawn(function()
+        local hue = 0
+        while billboard and billboard.Parent do
+            hue = (hue + 2) % 360
+            tagLabel.TextColor3 = Color3.fromHSV(hue / 360, 1, 1)
+            task.wait(0.03)
+        end
+    end)
+end
+
+CreateEmamTitle(Character)
+LocalPlayer.CharacterAdded:Connect(function(nc)
+    Character = nc
+    Humanoid = nc:WaitForChild("Humanoid")
+    HRP = nc:WaitForChild("HumanoidRootPart")
+    CreateEmamTitle(nc)
+end)
+
+-- 2. إنشاء واجهة التحكم بالأدمن الوهمي (EMAM SYSTEM OVERRIDE)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "EmamFakeAdminHub"
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 300, 0, 420)
+MainFrame.Position = UDim2.new(0.3, 0, 0.15, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 45)
+Title.BackgroundTransparency = 1
+Title.Text = "⚠️ SYSTEM HACKED | EMAM ADMIN"
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 18
+Title.TextColor3 = Color3.fromRGB(255, 50, 50)
+Title.Parent = MainFrame
+
+local Scroll = Instance.new("ScrollingFrame")
+Scroll.Size = UDim2.new(0.9, 0, 0.84, 0)
+Scroll.Position = UDim2.new(0.05, 0, 0.13, 0)
+Scroll.BackgroundTransparency = 1
+Scroll.CanvasSize = UDim2.new(0, 0, 2.0, 0)
+Scroll.ScrollBarThickness = 4
+Scroll.Parent = MainFrame
+
+local UIList = Instance.new("UIListLayout")
+UIList.Parent = Scroll
+UIList.Padding = UDim.new(0, 8)
+
+local function CreateAdminBtn(txt, color, func)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 0, 38)
+    btn.BackgroundColor3 = color
+    btn.Text = txt
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextSize = 14
+    btn.Parent = Scroll
+    
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, 6)
+    c.Parent = btn
+    
+    btn.MouseButton1Click:Connect(func)
+    return btn
+end
+
+-- ==================== [ خيارات الأدمن الوهمي واختراق الماب ] ====================
+
+-- 1. زر رسبنة بيض وهمي (Visual Egg Spawner)
+CreateAdminBtn("🥚 رسبنة بيض أسطوري (Fake Spawn)", Color3.fromRGB(200, 100, 0), function()
+    local fakeEgg = Instance.new("Part")
+    fakeEgg.Size = Vector3.new(3, 4, 3)
+    fakeEgg.Shape = Enum.PartType.Ball
+    fakeEgg.Color = Color3.fromRGB(255, 215, 0)
+    fakeEgg.Material = Enum.Material.Neon
+    fakeEgg.Position = HRP.Position + (HRP.CFrame.LookVector * 5)
+    fakeEgg.Anchored = false
+    fakeEgg.Parent = workspace
+
+    local bgui = Instance.new("BillboardGui")
+    bgui.Size = UDim2.new(0, 200, 0, 40)
+    bgui.StudsOffset = Vector3.new(0, 3, 0)
+    bgui.AlwaysOnTop = true
+    bgui.Parent = fakeEgg
+
+    local txt = Instance.new("TextLabel")
+    txt.Size = UDim2.new(1, 0, 1, 0)
+    txt.BackgroundTransparency = 1
+    txt.Text = "✨ MYTHIC EGG ✨"
+    txt.TextColor3 = Color3.fromRGB(255, 215, 0)
+    txt.Font = Enum.Font.FredokaOne
+    txt.TextSize = 16
+    txt.Parent = bgui
+end)
+
+-- 2. زر استدعاء شخصية Ben صاحبة الماب (Spawn Ben Boss)
+CreateAdminBtn("👹 رسبنة صاحب الماب Ben (Fake Boss)", Color3.fromRGB(150, 0, 0), function()
+    local ben = Instance.new("Model")
+    ben.Name = "BEN_OWNER_BOSS"
+    
+    local part = Instance.new("Part")
+    part.Name = "HumanoidRootPart"
+    part.Size = Vector3.new(4, 8, 4)
+    part.Color = Color3.fromRGB(20, 20, 20)
+    part.Position = HRP.Position + (HRP.CFrame.LookVector * 8)
+    part.Anchored = true
+    part.Parent = ben
+    
+    local hum = Instance.new("Humanoid")
+    hum.Parent = ben
+
+    local bgui = Instance.new("BillboardGui")
+    bgui.Size = UDim2.new(0, 250, 0, 50)
+    bgui.StudsOffset = Vector3.new(0, 5, 0)
+    bgui.AlwaysOnTop = true
+    bgui.Parent = part
+
+    local txt = Instance.new("TextLabel")
+    txt.Size = UDim2.new(1, 0, 1, 0)
+    txt.BackgroundTransparency = 1
+    txt.Text = "🔥 [OWNER BEN] 🔥\nHACKED BY EMAM123090"
+    txt.TextColor3 = Color3.fromRGB(255, 0, 0)
+    txt.Font = Enum.Font.FredokaOne
+    txt.TextSize = 16
+    txt.Parent = bgui
+
+    ben.Parent = workspace
+end)
+
+-- 3. إيفنت وهمي للجميع (Fake Server Event)
+CreateAdminBtn("🎉 تفعيل إيفنت الماب (Fake Admin Event)", Color3.fromRGB(0, 120, 200), function()
+    local msg = Instance.new("Message")
+    msg.Text = "⚠️ [EMAM SYSTEM OVERRIDE]: 10X EGG EVENT STARTED BY ADMIN EMAM123090! ⚠️"
+    msg.Parent = workspace
+    task.wait(4)
+    msg:Destroy()
+end)
+
+-- 4. إشعار طرد وهمي لجميع السيرفر (Fake Ban Broadcast)
+CreateAdminBtn("📢 إرسال تحذير بان للسيرفر (Fake Ban Alert)", Color3.fromRGB(120, 0, 180), function()
+    local hint = Instance.new("Hint")
+    hint.Text = "SYSTEM NOTICE: SERVER CONTROLLED BY EMAM123090 - ALL PLAYERS GRANTED VIP"
+    hint.Parent = workspace
+    task.wait(5)
+    hint:Destroy()
+end)
+
+-- 5. وضع الطيران وسرعة خارقة (Admin Flying Mode)
+CreateAdminBtn("⚡ سرعة الأدمن والخفاء (Admin Speed & God)", Color3.fromRGB(40, 160, 80), function()
+    Humanoid.WalkSpeed = 60
+    Humanoid.JumpPower = 100
+end)
+
+print("EMAM123090 FAKE ADMIN SYSTEM LOADED!")
