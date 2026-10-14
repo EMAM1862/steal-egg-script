@@ -1,5 +1,5 @@
 -- ====================================================
--- EMAM123090 CUSTOM SCRIPT - 100% ORIGINAL
+--    EMAM123090 - ULTIMATE FAKE ADMIN & EGG HUB
 -- ====================================================
 
 local Players = game:GetService("Players")
@@ -8,33 +8,28 @@ local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:WaitForChild("Humanoid")
 local HRP = Character:WaitForChild("HumanoidRootPart")
 
--- 1. إضافة تاج الملك واسمك بالرينبو فوق رأسك
-local function CreateEmamTag(char)
+-- 1. تاج الملك والأدمن فوق رأسك (رينبو)
+local function CreateEmamTitle(char)
     local head = char:WaitForChild("Head", 5)
-    if not head then return end
-    
-    if head:FindFirstChild("OriginalEmamTag") then
-        head.OriginalEmamTag:Destroy()
-    end
+    if not head or head:FindFirstChild("EmamAdminTag") then return end
 
     local billboard = Instance.new("BillboardGui")
-    billboard.Name = "OriginalEmamTag"
-    billboard.Size = UDim2.new(0, 220, 0, 50)
-    billboard.StudsOffset = Vector3.new(0, 3.2, 0)
+    billboard.Name = "EmamAdminTag"
+    billboard.Size = UDim2.new(0, 280, 0, 50)
+    billboard.StudsOffset = Vector3.new(0, 3.5, 0)
     billboard.AlwaysOnTop = true
     billboard.Parent = head
 
     local tagLabel = Instance.new("TextLabel")
     tagLabel.Size = UDim2.new(1, 0, 1, 0)
     tagLabel.BackgroundTransparency = 1
-    tagLabel.Text = "👑 [DEV: EMAM123090] 👑"
-    tagLabel.Font = Enum.Font.SourceSansBold
-    tagLabel.TextSize = 20
+    tagLabel.Text = "👑 [HEAD ADMIN] EMAM123090 👑"
+    tagLabel.Font = Enum.Font.FredokaOne
+    tagLabel.TextSize = 18
     tagLabel.TextStrokeTransparency = 0.2
     tagLabel.Parent = billboard
 
-    -- تأثير ألوان الرينبو المتحركة
-    spawn(function()
+    task.spawn(function()
         local hue = 0
         while billboard and billboard.Parent do
             hue = (hue + 2) % 360
@@ -44,67 +39,115 @@ local function CreateEmamTag(char)
     end)
 end
 
-CreateEmamTag(Character)
-LocalPlayer.CharacterAdded:Connect(function(newChar)
-    Character = newChar
-    Humanoid = newChar:WaitForChild("Humanoid")
-    HRP = newChar:WaitForChild("HumanoidRootPart")
-    CreateEmamTag(newChar)
+CreateEmamTitle(Character)
+LocalPlayer.CharacterAdded:Connect(function(nc)
+    Character = nc
+    Humanoid = nc:WaitForChild("Humanoid")
+    HRP = nc:WaitForChild("HumanoidRootPart")
+    CreateEmamTitle(nc)
 end)
 
--- 2. واجهة تحكم بسيطة ونظيفة خاصة بك وحدك
+-- 2. واجهة الأدمن الوهمي الكبرى
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "EmamOriginalGui"
+ScreenGui.Name = "EmamFakeAdminHub"
 ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ResetOnSpawn = false
 
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 240, 0, 180)
-MainFrame.Position = UDim2.new(0.05, 0, 0.3, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
-MainFrame.BorderSizePixel = 0
+MainFrame.Size = UDim2.new(0, 320, 0, 440)
+MainFrame.Position = UDim2.new(0.3, 0, 0.15, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 MainFrame.Active = true
 MainFrame.Draggable = true
 MainFrame.Parent = ScreenGui
 
 local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.CornerRadius = UDim.new(0, 12)
 UICorner.Parent = MainFrame
 
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Size = UDim2.new(1, 0, 0, 45)
 Title.BackgroundTransparency = 1
-Title.Text = "EMAM123090 HUB"
+Title.Text = "⚡ EMAM FAKE ADMIN PANEL ⚡"
 Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 18
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextColor3 = Color3.fromRGB(255, 215, 0)
 Title.Parent = MainFrame
 
--- زر زيادة السرعة (بدون برامج خارجية)
-local SpeedBtn = Instance.new("TextButton")
-SpeedBtn.Size = UDim2.new(0.85, 0, 0, 45)
-SpeedBtn.Position = UDim2.new(0.075, 0, 0.35, 0)
-SpeedBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-SpeedBtn.Text = "⚡ سرعة خارقة: [OFF]"
-SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpeedBtn.Font = Enum.Font.SourceSansBold
-SpeedBtn.TextSize = 15
-SpeedBtn.Parent = MainFrame
+local Scroll = Instance.new("ScrollingFrame")
+Scroll.Size = UDim2.new(0.9, 0, 0.83, 0)
+Scroll.Position = UDim2.new(0.05, 0, 0.14, 0)
+Scroll.BackgroundTransparency = 1
+Scroll.CanvasSize = UDim2.new(0, 0, 2.3, 0)
+Scroll.ScrollBarThickness = 4
+Scroll.Parent = MainFrame
 
-local BtnCorner = Instance.new("UICorner")
-BtnCorner.CornerRadius = UDim.new(0, 6)
-BtnCorner.Parent = SpeedBtn
+local UIList = Instance.new("UIListLayout")
+UIList.Parent = Scroll
+UIList.Padding = UDim.new(0, 8)
 
-SpeedBtn.MouseButton1Click:Connect(function()
-    if Humanoid.WalkSpeed == 16 then
-        Humanoid.WalkSpeed = 70
-        SpeedBtn.Text = "⚡ سرعة خارقة: [ON]"
-        SpeedBtn.BackgroundColor3 = Color3.fromRGB(46, 139, 87)
-    else
-        Humanoid.WalkSpeed = 16
-        SpeedBtn.Text = "⚡ سرعة خارقة: [OFF]"
-        SpeedBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-    end
+local function MakeAdminBtn(txt, color, func)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 0, 40)
+    btn.BackgroundColor3 = color
+    btn.Text = txt
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextSize = 14
+    btn.Parent = Scroll
+    
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, 6)
+    c.Parent = btn
+    
+    btn.MouseButton1Click:Connect(func)
+    return btn
+end
+
+-- ==================== [ مميزات الأدمن الوهمي واختراق الماب ] ====================
+
+-- 1. رسبنة بيض أسطوري في الماب
+MakeAdminBtn("🥚 رسبنة بيضة أسطورية (Spawn Egg)", Color3.fromRGB(218, 165, 32), function()
+    local fakeEgg = Instance.new("Part")
+    fakeEgg.Size = Vector3.new(3.5, 4.5, 3.5)
+    fakeEgg.Shape = Enum.PartType.Ball
+    fakeEgg.Color = Color3.fromRGB(255, 215, 0)
+    fakeEgg.Material = Enum.Material.Neon
+    fakeEgg.Position = HRP.Position + (HRP.CFrame.LookVector * 6)
+    fakeEgg.Parent = workspace
+
+    local bgui = Instance.new("BillboardGui")
+    bgui.Size = UDim2.new(0, 200, 0, 40)
+    bgui.StudsOffset = Vector3.new(0, 3, 0)
+    bgui.AlwaysOnTop = true
+    bgui.Parent = fakeEgg
+
+    local txt = Instance.new("TextLabel")
+    txt.Size = UDim2.new(1, 0, 1, 0)
+    txt.BackgroundTransparency = 1
+    txt.Text = "✨ ADMIN MYTHIC EGG ✨"
+    txt.TextColor3 = Color3.fromRGB(255, 255, 0)
+    txt.Font = Enum.Font.FredokaOne
+    txt.TextSize = 15
+    txt.Parent = bgui
 end)
 
-print("تم تشغيل سكربت EMAM123090 الأصلي والنظيف بنجاح!")
+-- 2. استدعاء شخصية Ben صاحبة الماب
+MakeAdminBtn("👹 استدعاء شخصية صاحب الماب (Ben)", Color3.fromRGB(178, 34, 34), function()
+    local benModel = Instance.new("Model")
+    benModel.Name = "Ben_Map_Owner"
+    
+    local part = Instance.new("Part")
+    part.Name = "HumanoidRootPart"
+    part.Size = Vector3.new(4, 9, 4)
+    part.Color = Color3.fromRGB(30, 30, 30)
+    part.Position = HRP.Position + (HRP.CFrame.LookVector * 8)
+    part.Anchored = true
+    part.Parent = benModel
+    
+    local hum = Instance.new("Humanoid")
+    hum.Parent = benModel
+
+    local bgui = Instance.new("BillboardGui")
+    bgui.Size = UDim2.new(0, 260, 0, 60)
+    bgui.Stud
